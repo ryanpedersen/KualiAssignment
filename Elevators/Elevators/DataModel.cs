@@ -13,24 +13,14 @@ namespace Elevators
         public event EventHandler DoorClosed;
 
 
-        private int maxFloors { get; set; }
+        public int maxFloors { get; set; }
+        public int moveRateSec { get; set; }
         private int currentFloor { get; set; }
         private int newFloor { get; set; }
-        private int moveRateSec { get; set; }
-
-
-        public Elevator(int maxFloors, int moveRateSec)
-        {
-            this.maxFloors = maxFloors;
-            this.moveRateSec = moveRateSec;
-
-        }
 
         public void MoveToFloor(int newFloor)
         {
 
         }
-
-         
     }
 }

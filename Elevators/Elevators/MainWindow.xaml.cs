@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,18 @@ namespace Elevators
         public MainWindow()
         {
             InitializeComponent();
+
+            runButton.Click += RunButton_Click;
+        }
+
+        ObservableCollection<Elevator> mElevators;
+
+        private void RunButton_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < Convert.ToInt16(numOfElevators.Text); i++)
+            {
+                var ele = new Elevator { maxFloors = Convert.ToInt16(numberOfFloors.Text), moveRateSec = 1 };
+            }
         }
     }
 }
