@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Elevators
 {
@@ -38,6 +26,7 @@ namespace Elevators
 
         private void RunButton_Click(object sender, RoutedEventArgs e)
         {
+            // add error checking and exception handling - verify input text is a number
             for (int i = 0; i < Convert.ToInt16(numOfElevators.Text); i++)
             {
                 var ele = new Elevator { maxFloors = Convert.ToInt16(numberOfFloors.Text), moveRateSec = 1, myNumber = i, inServiceMode = false };
@@ -52,20 +41,27 @@ namespace Elevators
             }
         }
 
+        // pass in what elevator and floor it's at in the event handler
         private void Ele_doorClosed(object sender, EventArgs e)
         {
             Console.WriteLine("Elevator door closed");
         }
 
+        // pass in what elevator and floor it's at in the event handler
         private void Ele_doorOpen(object sender, EventArgs e)
         {
             Console.WriteLine("Elevator door open");
         }
 
+        // pass in what elevator and floor it's at in the event handler
         private void Ele_atThisFloor(object sender, EventArgs e)
         {
             Console.WriteLine("Elevator at floor");
         }
+
+        // create a button to put an elevator in service mode
+
+        // create a UI to show all elevator status.
 
         private void RequestButton_Click(object sender, RoutedEventArgs e)
         {
@@ -74,6 +70,9 @@ namespace Elevators
 
             int closestElevatorNumber = -1;
             int closestElevatorDistance = 1000000;
+
+
+            // add error checking and exception handling - verify input text is a number
 
             // what elevator is closes?
             foreach (var ele in mElevators)
@@ -104,17 +103,24 @@ namespace Elevators
             // request the closest elevator to stop
             foreach (var ele in mElevators)
             {
-                if (ele.myNumber == closestElevatorNumber)
+                try
                 {
-                    // what about the person in the elevator already?
-                    if (ele.IsMoving())
+                    if (ele.myNumber == closestElevatorNumber)
                     {
-                        ele.StopAndAddFloor(fromFloor, toFloor);
+                        // what about the person in the elevator already?
+                        if (ele.IsMoving())
+                        {
+                            ele.StopAndAddFloor(fromFloor, toFloor);
+                        }
+                        else
+                        {
+                            ele.MoveToFloor(toFloor);
+                        }
                     }
-                    else
-                    {
-                        ele.MoveToFloor(toFloor);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
         }

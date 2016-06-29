@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace Elevators
@@ -17,6 +13,8 @@ namespace Elevators
         public int maxFloors { get; set; }
         public int moveRateSec { get; set; }
         private int currentFloor { get; set; }
+
+        // this needs to change to an array, so it can stop at multiple floors
         private int newFloor { get; set; }
         private bool? moveUp { get; set; }
 
@@ -24,6 +22,9 @@ namespace Elevators
         private int TotalTripsMade { get; set; }
 
         public bool inServiceMode { get; set; }
+
+        // this needs to change to an array, so it can pick up mutiple people
+        private bool StopAndPickUp { get; set; }
 
         private DispatcherTimer TimeForNewFloorTimer;
 
@@ -39,6 +40,12 @@ namespace Elevators
 
         public void MoveToFloor(int moveToFloor)
         {
+            if (moveToFloor > maxFloors)
+                throw new Exception("Can't go above top floor");
+
+            if(moveToFloor < 1)
+                throw new Exception("Can't go below bottom floor");
+
             // close doors?
             if (doorClosed != null)
                 doorClosed(this, new EventArgs());
@@ -61,13 +68,18 @@ namespace Elevators
 
         public void StopAndAddFloor(int fromPauseFloor, int toAddFloor)
         {
-            // stop the elevator when it's at th fromPauseFloor
-            // set a flag so the timer knows to stop
+            // stop the elevator when it's at the fromPauseFloor... set a flag so the TimeForNewFloor timer knows to stop
+            // add it to the array
+            bool StopAndPickUp = true;
+            // StopAndPickUp.Add(fromPaulseFloor)
 
-            // need to kep track of all to floors to stop at.. this list could grow
+            // add this to the list of floors to stop
+            // newFloor.Add(toAddFloor)
 
         }
 
+
+        // this needs to be split up.. one for picking up, one for dropping off
         private void TimeForNewFloorTimer_Tick(object sender, EventArgs e)
         {
             if (moveUp.Value)
@@ -77,12 +89,24 @@ namespace Elevators
 
             TotalFloorsMoved++;
 
+            // when it's an array, stop at the correct floors
+            if(StopAndPickUp)
+            {
+                // open doors
+                // close doors
+                // keep going
+                // if StopAndPick up array is empty,... no need to stop and pick up
+            }
+
+            // log
             if (atThisFloor != null)
                 atThisFloor(this, new EventArgs());
 
             Console.WriteLine(myNumber + " " + currentFloor );
 
             // notify/report when a
+            // newFloor will be an array, if current floor is one of the newFloors, open doors, close doors, keep going
+            // remove this floor from the list
             if (currentFloor == newFloor)
             {
                 TimeForNewFloorTimer.Stop();
@@ -98,6 +122,8 @@ namespace Elevators
                 if ((TotalTripsMade % 100) == 0)
                     inServiceMode = true;
             }
+
+            // when the newFloor list is empty .. stop timer.
         }
 
         public int HowCloseToThisFloor(int ReqestingFloor)
@@ -130,6 +156,8 @@ namespace Elevators
                     throw new Exception("Elevator not going down that far");
             }
 
+            // what about the logic that even though we are not passing through, it's still the closest to the pick up?
+
             return Math.Abs(currentFloor - ReqestingFloor);
         }
 
@@ -150,5 +178,7 @@ namespace Elevators
         {
             inServiceMode = false;
         }
+
+        // Add a method to show more status of elevator
     }
 }
