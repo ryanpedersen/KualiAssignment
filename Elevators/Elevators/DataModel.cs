@@ -18,7 +18,7 @@ namespace Elevators
         public int moveRateSec { get; set; }
         private int currentFloor { get; set; }
         private int newFloor { get; set; }
-        private bool moveUp { get; set; }
+        private bool? moveUp { get; set; }
 
         private int TotalFloorsMoved { get; set; }
         private int TotalTripsMade { get; set; }
@@ -45,6 +45,7 @@ namespace Elevators
 
             if (currentFloor == moveToFloor)
             {
+                moveUp = null;
                 return;
             }
 
@@ -60,7 +61,7 @@ namespace Elevators
 
         private void TimeForNewFloorTimer_Tick(object sender, EventArgs e)
         {
-            if (moveUp)
+            if (moveUp.Value)
                 currentFloor++;
             else
                 currentFloor--;
@@ -77,17 +78,43 @@ namespace Elevators
             {
                 TimeForNewFloorTimer.Stop();
 
+                moveUp = null;
+
                 // keep doors open?
                 if (doorOpen != null)
                     doorOpen(this, new EventArgs());
 
                 TotalTripsMade++;
 
-                if (TotalTripsMade mod 100)
+                if ((TotalTripsMade % 100) == 0)
                     inServiceMode = true;
             }
         }
 
+        public int HowCloseToThisFloor(int ReqestingFloor)
+        {
+            if(inServiceMode)
+                throw new Exception("In service Mode");
+
+            // elevator is stopped
+            if(moveUp == null)
+            {
+                return Math.Abs(currentFloor - ReqestingFloor);
+            }
+
+            // elevator has moved passed elevator
+            if ((moveUp.Value && (currentFloor > ReqestingFloor)) ||
+                (moveUp.Value == false) && (currentFloor < ReqestingFloor))
+                throw new Exception("Elevator passed this floor");
+
+
+            return Math.Abs(currentFloor - ReqestingFloor);
+        }
+
+        public bool InServiceMode()
+        {
+            return inServiceMode;
+        }
 
         public void ExitServiceMode()
         {

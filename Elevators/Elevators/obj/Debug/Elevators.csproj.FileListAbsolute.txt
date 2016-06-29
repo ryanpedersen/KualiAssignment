@@ -1,1 +1,14 @@
 C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\bin\Debug\Elevators.exe.config
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\obj\Debug\Elevators.csprojResolveAssemblyReference.cache
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\obj\Debug\MainWindow.g.cs
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\obj\Debug\App.g.cs
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\obj\Debug\Elevators_MarkupCompile.cache
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\obj\Debug\Elevators_MarkupCompile.lref
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\bin\Debug\Elevators.exe
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\bin\Debug\Elevators.pdb
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\obj\Debug\MainWindow.baml
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\obj\Debug\Elevators.g.resources
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\obj\Debug\Elevators.Properties.Resources.resources
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\obj\Debug\Elevators.csproj.GenerateResource.Cache
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\obj\Debug\Elevators.exe
+C:\RTSW\GitHub\KualiAssignment\Elevators\Elevators\obj\Debug\Elevators.pdb

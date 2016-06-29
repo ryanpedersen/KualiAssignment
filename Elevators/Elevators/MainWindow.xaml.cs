@@ -43,20 +43,20 @@ namespace Elevators
                 ele.Init();
 
                 ele.atThisFloor += Ele_atThisFloor;
-                ele.DoorOpen += Ele_DoorOpen;
-                ele.DoorClosed += Ele_DoorClosed;
+                ele.doorOpen += Ele_doorOpen;
+                ele.doorClosed += Ele_doorClosed;
 
                 mElevators.Add(ele);
             }
 
         }
 
-        private void Ele_DoorClosed(object sender, EventArgs e)
+        private void Ele_doorClosed(object sender, EventArgs e)
         {
             Console.WriteLine("Elevator door closed");
         }
 
-        private void Ele_DoorOpen(object sender, EventArgs e)
+        private void Ele_doorOpen(object sender, EventArgs e)
         {
             Console.WriteLine("Elevator door open");
         }
@@ -71,11 +71,43 @@ namespace Elevators
             int fromFloor = Convert.ToInt16(requestFromVal.Text);
             int toFloor = Convert.ToInt16(requestToVal.Text);
 
-            foreach(var ele in mElevators)
-            {
+            int closestElevatorNumber = -1;
+            int closestElevatorDistance = 1000000;
 
+            // what elevator is closes?
+            foreach (var ele in mElevators)
+            {
+                try
+                {
+                    int thisEledistance = ele.HowCloseToThisFloor(fromFloor);
+
+                    if (thisEledistance < closestElevatorDistance)
+                    {
+                        closestElevatorDistance = thisEledistance;
+                        closestElevatorNumber = ele.myNumber;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("this elevator is not an option");
+                }
+            }
+
+            // no elevator is in service
+            if (closestElevatorNumber == -1)
+            {
+                Console.WriteLine("all elevators must be out of service");
+                return;
+            }
+
+            // request the closest elevator to stop
+            foreach (var ele in mElevators)
+            {
+                if (ele.myNumber == closestElevatorNumber)
+                {
+                    ele.MoveToFloor(toFloor);
+                }
             }
         }
-
     }
 }
