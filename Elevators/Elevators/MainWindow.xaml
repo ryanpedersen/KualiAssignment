@@ -8,9 +8,19 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <TextBlock  HorizontalAlignment="Left" Margin="39,41,0,0" TextWrapping="Wrap" Text="Number of Floors" VerticalAlignment="Top"/>
-        <TextBox x:Name="numberOfFloors" HorizontalAlignment="Left" Height="23" Margin="137,40,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="120"/>
         <TextBlock  HorizontalAlignment="Left" Margin="24,81,0,0" TextWrapping="Wrap" Text="Number of Elevators" VerticalAlignment="Top"/>
-        <TextBox x:Name="numOfElevators" HorizontalAlignment="Left" Height="23" Margin="137,80,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="runButton" Content="Run" HorizontalAlignment="Left" Margin="137,150,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="numberOfFloors" HorizontalAlignment="Left" Height="23" Margin="137,40,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="48"/>
+        <TextBox x:Name="numOfElevators" HorizontalAlignment="Left" Height="23" Margin="137,80,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="48"/>
+
+        <Button x:Name="runButton" Content="Run Simulator" HorizontalAlignment="Left" Margin="206,60,0,0" VerticalAlignment="Top" Width="99"/>
+
+
+        <TextBlock  HorizontalAlignment="Left" Margin="10,168,0,0" TextWrapping="Wrap" Text="Request from Floor" VerticalAlignment="Top" />
+        <TextBlock  HorizontalAlignment="Left" Margin="10,195,0,0" TextWrapping="Wrap" Text="Request to Floor" VerticalAlignment="Top" />
+
+        <TextBox x:Name="requestFromVal" HorizontalAlignment="Left" Height="23" Margin="137,166,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="48"/>
+        <TextBox x:Name="requestToVal" HorizontalAlignment="Left" Height="23" Margin="137,194,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="48"/>
+
+        <Button x:Name="requestButton" Content="Request Elevator" HorizontalAlignment="Left" Margin="206,180,0,0" VerticalAlignment="Top" Width="99" Click="runButton_Copy_Click"/>
     </Grid>
 </Window>
