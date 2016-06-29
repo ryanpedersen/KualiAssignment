@@ -59,6 +59,15 @@ namespace Elevators
             TimeForNewFloorTimer.Start();
         }
 
+        public void StopAndAddFloor(int fromPauseFloor, int toAddFloor)
+        {
+            // stop the elevator when it's at th fromPauseFloor
+            // set a flag so the timer knows to stop
+
+            // need to kep track of all to floors to stop at.. this list could grow
+
+        }
+
         private void TimeForNewFloorTimer_Tick(object sender, EventArgs e)
         {
             if (moveUp.Value)
@@ -102,13 +111,34 @@ namespace Elevators
                 return Math.Abs(currentFloor - ReqestingFloor);
             }
 
-            // elevator has moved passed elevator
-            if ((moveUp.Value && (currentFloor > ReqestingFloor)) ||
-                (moveUp.Value == false) && (currentFloor < ReqestingFloor))
-                throw new Exception("Elevator passed this floor");
+            if (moveUp.Value)
+            {
+                if (currentFloor > ReqestingFloor)
+                    throw new Exception("Elevator passed this floor");
 
+                if (ReqestingFloor > newFloor)
+                    throw new Exception("Elevator not going that far up");
+
+            }
+
+            if (moveUp.Value == false)
+            {
+                if (currentFloor < ReqestingFloor)
+                    throw new Exception("Elevator passed this floor");
+
+                if (ReqestingFloor < newFloor)
+                    throw new Exception("Elevator not going down that far");
+            }
 
             return Math.Abs(currentFloor - ReqestingFloor);
+        }
+
+        public bool IsMoving()
+        {
+            if (moveUp == null)
+                return false;
+            else
+                return true;
         }
 
         public bool InServiceMode()

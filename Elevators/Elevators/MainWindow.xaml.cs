@@ -28,6 +28,8 @@ namespace Elevators
             runButton.Click += RunButton_Click;
 
             requestButton.Click += RequestButton_Click;
+
+            mElevators = new ObservableCollection<Elevator>();
         }
 
 
@@ -48,7 +50,6 @@ namespace Elevators
 
                 mElevators.Add(ele);
             }
-
         }
 
         private void Ele_doorClosed(object sender, EventArgs e)
@@ -105,7 +106,15 @@ namespace Elevators
             {
                 if (ele.myNumber == closestElevatorNumber)
                 {
-                    ele.MoveToFloor(toFloor);
+                    // what about the person in the elevator already?
+                    if (ele.IsMoving())
+                    {
+                        ele.StopAndAddFloor(fromFloor, toFloor);
+                    }
+                    else
+                    {
+                        ele.MoveToFloor(toFloor);
+                    }
                 }
             }
         }
